@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Application Guru | Sally Wells</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar" id="homeNav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.png" alt="The Application Guru">
+    </a>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="client-acceptances.html">Client Acceptances</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wave-bg wave-bg--circles"></div>
+    <div class="wave-bg wave-bg--liblue" style="top: 400px;"></div>
+    <div class="hero-logo">
+      <img src="assets/logo.png" alt="The Application Guru" class="logo-img">
+    </div>
+    <div class="hero-content">
+      <div class="hero-photo">
+        <img src="assets/sally-portrait.png" alt="Sally Wells">
+      </div>
+      <div class="hero-text">
+        <h1>Hi, I'm Sally Wells!</h1>
+        <p>I help undergraduate and postgraduate applicants craft standout personal statements that secure places at the world's leading universities.</p>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <p class="tagline">Turn Your Story Into a Standout Application.</p>
+      <div class="cta-buttons">
+        <a href="about.html" class="btn btn-outline">→ About</a>
+        <a href="contact.html" class="btn btn-primary">Book Your First Session</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="services">
+    <div class="services-inner">
+      <div class="service-card">
+        <img src="assets/coaching.svg" alt="" class="service-icon">
+        <h3>Coaching</h3>
+        <p>Providing individualised coaching sessions, tailoring my approach to each applicant's unique background, goals, and strengths.</p>
+      </div>
+      <div class="service-card">
+        <img src="assets/brainstorming.svg" alt="" class="service-icon">
+        <h3>Brainstorming</h3>
+        <p>Brainstorm and develop compelling ideas that resonate with admissions officers and highlight their individuality, whilst maintaining authenticity.</p>
+      </div>
+      <div class="service-card">
+        <img src="assets/editing.svg" alt="" class="service-icon">
+        <h3>Editing</h3>
+        <p>Providing individualised coaching sessions, tailoring my approach to each applicant's unique background, goals, and strengths.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h2>Client Reviews</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <p>"Sally helped me cut out unnecessary points and write concise, impactful personal statements. Whenever I messaged her, she was so efficient in getting back to me. I wouldn't have been able to produce such perfect statements without her guidance."</p>
+        <div class="review-footer">
+          <span class="reviewer">Jamie J</span>
+          <span class="quote-mark">&ldquo;</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <p>"Sally helped me write my personal statements both for my undergraduate application to the <strong>University of Exeter</strong> and for my Master's application to <strong>Oxford</strong>. I got into both universities, with scholarships."</p>
+        <div class="review-footer">
+          <span class="reviewer">Jade R</span>
+          <span class="quote-mark">&ldquo;</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <p>"I have received offers from <strong>St Andrews</strong> and <strong>Durham</strong> so far and I think I'm going to end up attending one of them. Thank you again for your help, they said my personal statement was a highlight."</p>
+        <div class="review-footer">
+          <span class="reviewer">Jack W</span>
+          <span class="quote-mark">&ldquo;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scholarships">
+    <h2>Scholarships and Financial Awards</h2>
+    <div class="uni-logos">
+      <img src="assets/logo-ubc.png" alt="University of British Columbia">
+      <img src="assets/logo-exeter2.png" alt="University of Exeter">
+      <img src="assets/logo-kcl.png" alt="King's College London">
+      <img src="assets/logo-oxford.png" alt="University of Oxford">
+      <img src="assets/logo-toronto.png" alt="University of Toronto">
+    </div>
+    <a href="client-acceptances.html" class="btn-acceptances">View all client acceptances →</a>
+  </section>
+
+  <footer class="footer">
+    <div class="wave-bg wave-bg--dark" style="top: -40px"></div>
+    <p>Working In Association With:</p>
+    <a href="https://learnersjourney.co.za/" target="_blank" rel="noopener noreferrer"><img src="assets/tlj.png" alt="The Learner's Journey" class="partner-logo"></a>
+  </footer>
+  <script>
+    const nav = document.getElementById('homeNav');
+    const heroLogo = document.querySelector('.hero-logo');
+    window.addEventListener('scroll', () => {
+      if (heroLogo.getBoundingClientRect().bottom < 0) {
+        nav.classList.add('nav--visible');
+      } else {
+        nav.classList.remove('nav--visible');
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>

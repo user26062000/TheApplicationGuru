@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Acceptances | The Application Guru</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar nav--visible">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="The Application Guru"></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="client-acceptances.html" class="active">Client Acceptances</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+  <div class="nav-spacer"></div>
+
+  <div class="acceptances-banner">
+    <h1>Full List of Client Acceptances:</h1>
+  </div>
+
+  <section class="acceptances">
+    <div class="scholarship-legend"><span class="legend-dot"></span> scholarship awarded</div>
+    <div class="acceptances-grid" id="acceptances-grid">
+      <p class="acceptances-loading">Loading...</p>
+    </div>
+  </section>
+
+  <script>
+    // ─── PASTE YOUR PUBLISHED CSV URL HERE ───────────────────────────────────
+    const SHEET_CSV_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // Controls which regions appear in each column, and in what order.
+    const COLUMNS = [
+      ['UNITED KINGDOM'],
+      ['EUROPE'],
+      ['NORTH AMERICA', 'AUSTRALIA']
+    ];
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [], field = '', inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], next = text[i + 1];
+        if (inQuotes) {
+          if (ch === '"' && next === '"') { field += '"'; i++; }
+          else if (ch === '"') { inQuotes = false; }
+          else { field += ch; }
+        } else {
+          if (ch === '"') { inQuotes = true; }
+          else if (ch === ',') { row.push(field.trim()); field = ''; }
+          else if (ch === '\n' || (ch === '\r' && next === '\n')) {
+            if (ch === '\r') i++;
+            row.push(field.trim()); rows.push(row); row = []; field = '';
+          } else { field += ch; }
+        }
+      }
+      if (field || row.length) { row.push(field.trim()); rows.push(row); }
+      return rows;
+    }
+
+    async function loadAcceptances() {
+      const grid = document.getElementById('acceptances-grid');
+      try {
+        const res = await fetch(SHEET_CSV_URL);
+        if (!res.ok) throw new Error();
+        const rows = parseCSV(await res.text());
+
+        // Build: { REGION: { SUBREGION: [{ university, scholarship }] } }
+        const data = {};
+        for (const row of rows.slice(1)) {
+          const region = (row[0] || '').toUpperCase().trim();
+          const subregion = (row[1] || '').toUpperCase().trim();
+          const university = (row[2] || '').trim();
+          const scholarship = (row[3] || '').toUpperCase() === 'TRUE';
+          if (!region || !university) continue;
+          if (!data[region]) data[region] = {};
+          if (!data[region][subregion]) data[region][subregion] = [];
+          data[region][subregion].push({ university, scholarship });
+        }
+
+        grid.innerHTML = '';
+        for (const columnRegions of COLUMNS) {
+          const col = document.createElement('div');
+          col.className = 'region-col';
+          for (const region of columnRegions) {
+            if (!data[region]) continue;
+            const h2 = document.createElement('h2');
+            h2.textContent = region;
+            col.appendChild(h2);
+            for (const [subregion, unis] of Object.entries(data[region])) {
+              if (subregion) {
+                const h3 = document.createElement('h3');
+                h3.textContent = subregion;
+                col.appendChild(h3);
+              }
+              const ul = document.createElement('ul');
+              for (const { university, scholarship } of unis) {
+                const li = document.createElement('li');
+                if (scholarship) li.className = 'scholarship';
+                li.textContent = university;
+                ul.appendChild(li);
+              }
+              col.appendChild(ul);
+            }
+          }
+          grid.appendChild(col);
+        }
+      } catch {
+        grid.innerHTML = '<p class="acceptances-loading">Could not load acceptances. Please try again later.</p>';
+      }
+    }
+
+    loadAcceptances();
+  </script>
+</body>
+</html>
