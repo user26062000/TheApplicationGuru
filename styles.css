@@ -38,11 +38,6 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
   z-index: 0;
 }
-.wave-bg--circles {
-  top: 0;
-  height: 380px;
-  background-image: url('assets/wave-circles.png');
-}
 .wave-bg--white {
   height: 300px;
   background-image: url('assets/wave-white.png');
@@ -65,21 +60,12 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 3rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--white);
   backdrop-filter: blur(8px);
-  box-shadow: 0 1px 16px rgba(0,0,0,0.07);
-  transform: translateY(-100%);
-  opacity: 0;
-  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              opacity 0.3s ease;
-}
-.navbar.nav--visible {
-  transform: translateY(0);
-  opacity: 1;
+  box-shadow: 0 1px 16px rgba(74, 122, 140, 0.12);
 }
 .nav-logo img {
   height: 55px;
-  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-links { display: flex; gap: 2rem; }
@@ -94,8 +80,7 @@ img { max-width: 100%; display: block; }
   padding: 3rem 2rem 2rem;
 }
 .hero > *:not(.wave-bg) { position: relative; z-index: 1; }
-.hero-logo { margin-bottom: 2rem; }
-.logo-img { height: 230px; margin: 0 auto; }
+.logo-img { height: 230px; margin: 0 auto; margin-top: 4rem }
 
 .hero-content {
   display: flex;
@@ -103,7 +88,7 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   gap: 3rem;
   max-width: 900px;
-  margin: 0 auto 2rem;
+  margin: -30px auto 2rem;
 }
 .hero-photo img {
   width: 500px;
@@ -112,10 +97,10 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 .hero-text { text-align: left; margin-top: 90px; }
-.hero-text h1 { font-size: 3rem; font-weight: 350; margin-bottom: 0.6rem; color: var(--gray-dark) }
-.hero-text p { font-size: 1rem; font-weight: 200; color: var(--gray-med); }
+.hero-text h1 { font-size: 3rem; font-weight: 400; margin-bottom: 0.6rem; color: var(--gray-dark) }
+.hero-text p { font-size: 1.1rem; font-weight: 350; color: var(--gray-med); }
 
-.tagline { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; margin-top: 5rem; }
+.tagline { font-size: 1.2rem; font-weight: 400; margin-bottom: 1rem; margin-top: 1rem; }
 .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
 .btn {
@@ -189,6 +174,7 @@ img { max-width: 100%; display: block; }
 }
 .scholarships > *:not(.wave-bg) { position: relative; z-index: 1; }
 .scholarships h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 2rem; }
+.scholarships .btn { margin-top: 2rem; }
 .uni-logos {
   display: flex;
   justify-content: space-evenly;
@@ -215,6 +201,10 @@ img { max-width: 100%; display: block; }
   font-weight: 300;
   color: var(--gray-dark);
   margin-bottom: 2.5rem;
+}
+.booking-logo {
+  height: 120px;
+  margin: 0 auto 2.5rem;
 }
 .booking-form {
   max-width: 720px;
@@ -326,9 +316,9 @@ img { max-width: 100%; display: block; }
 .btn-contact {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   background: var(--blue-mid);
   color: var(--white);
+  gap: 0.5rem;
   padding: 0.6rem 1.6rem;
   border-radius: 25px;
   font-size: 0.95rem;
@@ -345,7 +335,7 @@ img { max-width: 100%; display: block; }
   padding: 4rem 5rem;
   max-width: 1400px;
   margin: 0 auto;
-  align-items: flex-start;
+  align-items: center;
 }
 .about-content { flex: 1; }
 .about-content h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
@@ -390,12 +380,14 @@ img { max-width: 100%; display: block; }
 .btn-acceptances {
   display: inline-block;
   margin-top: 1.8rem;
-  font-size: 0.8rem;
+  font-size: 1.2  rem;
   font-weight: 600;
-  color: var(--gray-med);
+  color: var(--gray-dark);
   letter-spacing: 0.04em;
   border-bottom: 1px solid currentColor;
   transition: color 0.2s;
+  background-color: var(--grey-li);
+  border-radius: 30px;
 }
 .btn-acceptances:hover { color: var(--blue-dark); }
 
@@ -424,10 +416,12 @@ img { max-width: 100%; display: block; }
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 718px) {
-  .hero-content { flex-direction: column; gap: 1.5rem; }
-  .hero-text { text-align: center; }
-  .hero-photo img { width: 160px; height: 160px; }
-  .hero-text h1 { font-size: 1.7rem; }
+  .hero-content { flex-direction: row; gap: 1rem; align-items: center; justify-content: flex-start; text-align: left; margin-top: 5.2rem; }
+  .hero-photo { flex-shrink: 0; align-self: flex-start; margin-top: 3rem; }
+  .hero-photo img { width: 130px; height: 130px; }
+  .hero-text { text-align: left; margin-top: 0; }
+  .hero-text h1 { font-size: 1.4rem; }
+  .hero-text p { font-size: 0.85rem; }
   .services-inner { gap: 2rem; }
   .review-card { max-width: 100%; }
   .about-section { flex-direction: column; padding: 2rem 1.5rem; gap: 2rem; }

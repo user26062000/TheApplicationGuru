@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar nav--visible">
+  <nav class="navbar">
     <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="The Application Guru"></a>
     <div class="nav-links">
       <a href="index.html">Home</a>
@@ -20,8 +20,8 @@
   <div class="nav-spacer"></div>
 
   <section class="booking">
-    <h2 class="booking-title">Let's Get Started!</h2>
-    <form class="booking-form" action="https://formsubmit.co/your@email.com" method="POST">
+    <img src="assets/logo.png" alt="The Application Guru" class="booking-logo">
+    <form class="booking-form" action="https://formsubmit.co/theapplicationguru@icloud.com" method="POST">
       <div class="form-row">
         <div class="form-group">
           <label>Name <span class="required">(Required)</span></label>
@@ -48,11 +48,13 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Are you a <span class="required">(Required)</span></label>
+        <label>You're applying for a: <span class="required">(Required)</span></label>
         <div class="radio-group">
-          <label class="radio-label"><input type="radio" name="role" value="Learner" required> Learner</label>
-          <label class="radio-label"><input type="radio" name="role" value="High School Representative"> High School Representative</label>
-          <label class="radio-label"><input type="radio" name="role" value="University Representative"> University Representative</label>
+          <label class="radio-label"><input type="radio" name="role" value="Undergraduate" required> Undergraduate degree</label>
+          <label class="radio-label"><input type="radio" name="role" value="Masters"> Master's degree</label>
+          <label class="radio-label"><input type="radio" name="role" value="PhD"> PhD</label>
+          <label class="radio-label"><input type="radio" name="role" value="Honours degree"> Honours degree</label>
+          <label class="radio-label"><input type="radio" name="role" value="Postgraduate (other)"> Postgraduate (other)</label>
         </div>
       </div>
       <div class="form-group">
@@ -63,7 +65,7 @@
     </form>
     <div class="booking-email">
       <p>Or reach out directly:</p>
-      <a href="mailto:sally.wells66@icloud.com" class="btn btn-contact">Email</a>
+      <a href="mailto:theapplicationguru@icloud.com" class="btn btn-contact">Email</a>
     </div>
   </section>
 </body>
