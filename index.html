@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
       <img src="assets/logo.png" alt="The Application Guru">
@@ -19,19 +18,26 @@
       <a href="contact.html">Contact</a>
     </div>
   </nav>
-
+<img 
+     src="assets/wave.svg" 
+     style=
+       "top: 360px"
+     alt="" 
+     class="wave-bg">    
+    <div>  
+  </div>
   <header class="hero">
-    <div class="wave-bg wave-bg--circles"></div>
-    <div class="wave-bg wave-bg--liblue" style="top: 500px;"></div>
-    <div class="hero-logo">
-      <img src="assets/logo.png" alt="The Application Guru" class="logo-img">
+  <img src="assets/corner-circles-left.svg" alt="" class="corner-circles corner-circles--left">
+  <img src="assets/corner-circles-right.svg" alt="" class="corner-circles corner-circles--right">
+  <div class="hero-logo">
+    <img src="assets/logo.png" alt="The Application Guru" class="logo-img">
+  </div>
+  <div class="hero-cta">
+    <p class="tagline">Turn Your Story Into a Standout Application.</p>
+    <div class="cta-buttons">
+      <a href="about.html" class="btn btn-outline">→ About</a>
+      <a href="contact.html" class="btn btn-primary">Contact</a>
     </div>
-     <div class="hero-cta">
-      <p class="tagline">Turn Your Story Into a Standout Application.</p>
-      <div class="cta-buttons">
-        <a href="about.html" class="btn btn-outline">→ About</a>
-        <a href="contact.html" class="btn btn-primary">Contact</a>
-      </div>
     <div class="hero-content">
       <div class="hero-photo">
         <img src="assets/sally-portrait.png" alt="Sally Wells">
@@ -41,8 +47,8 @@
         <p>I help undergraduate and postgraduate applicants craft standout personal statements that secure places at the world's leading universities.</p>
       </div>
     </div>
-    </div>
-  </header>
+  </div>
+</header>
 
   <section class="services">
     <div class="services-inner">
@@ -59,37 +65,134 @@
       <div class="service-card">
         <img src="assets/editing.svg" alt="" class="service-icon">
         <h3>Editing</h3>
-        <p>Providing individualised coaching sessions, tailoring my approach to each applicant's unique background, goals, and strengths.</p>
+        <p>Meticulous editing and draft reviews, with detailed, constructive feedback on structure, content, tone, and language.</p>
       </div>
     </div>
   </section>
 
   <section class="reviews">
     <h2>Client Reviews</h2>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <p>"Sally helped me cut out unnecessary points and write concise, impactful personal statements. Whenever I messaged her, she was so efficient in getting back to me. I wouldn't have been able to produce such perfect statements without her guidance."</p>
-        <div class="review-footer">
-          <span class="reviewer">Jamie J</span>
-          <span class="quote-mark">&ldquo;</span>
-        </div>
-      </div>
-      <div class="review-card">
-        <p>"Sally helped me write my personal statements both for my undergraduate application to the <strong>University of Exeter</strong> and for my Master's application to <strong>Oxford</strong>. I got into both universities, with scholarships."</p>
-        <div class="review-footer">
-          <span class="reviewer">Jade R</span>
-          <span class="quote-mark">&ldquo;</span>
-        </div>
-      </div>
-      <div class="review-card">
-        <p>"I have received offers from <strong>St Andrews</strong> and <strong>Durham</strong> so far and I think I'm going to end up attending one of them. Thank you again for your help, they said my personal statement was a highlight."</p>
-        <div class="review-footer">
-          <span class="reviewer">Jack W</span>
-          <span class="quote-mark">&ldquo;</span>
+    <div class="reviews-carousel">
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="reviews-track">
+          <p class="reviews-loading">Loading reviews...</p>
         </div>
       </div>
     </div>
+    <div class="carousel-dots" id="reviews-dots"></div>
   </section>
+
+  <script>
+    // ─── PASTE PUBLISHED CSV URL HERE (sheet columns: Name, Review) ──────────
+    const REVIEWS_CSV_URL = '';
+    // ─────────────────────────────────────────────────────────────────────────
+
+    const FALLBACK_REVIEWS = [
+      { name: 'Jamie J', text: "Sally helped me cut out unnecessary points and write concise, impactful personal statements. Whenever I messaged her, she was so efficient in getting back to me. I wouldn't have been able to produce such perfect statements without her guidance." },
+      { name: 'Jade R', text: "Sally helped me write my personal statements both for my undergraduate application to the University of Exeter and for my Master's application to Oxford. I got into both universities, with scholarships." },
+      { name: 'Jack W', text: "I have received offers from St Andrews and Durham so far and I think I'm going to end up attending one of them. Thank you again for your help, they said my personal statement was a highlight." },
+      { name: 'Parent', text: "Sally is a magician! When you have a child who is word efficient (i.e, reserved), at best, and needs to introduce themselves to admission boards via personal essays, it seems like an impossible task. Sally has an incredible ability to take students on a journey of self reflection and expression. Both my children were accepted to their first choice programs. Sally does not write the essays but coaches them through the process. She is my answer to prayer!" }
+    ];
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [], field = '', inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], next = text[i + 1];
+        if (inQuotes) {
+          if (ch === '"' && next === '"') { field += '"'; i++; }
+          else if (ch === '"') { inQuotes = false; }
+          else { field += ch; }
+        } else {
+          if (ch === '"') { inQuotes = true; }
+          else if (ch === ',') { row.push(field.trim()); field = ''; }
+          else if (ch === '\n' || (ch === '\r' && next === '\n')) {
+            if (ch === '\r') i++;
+            row.push(field.trim()); rows.push(row); row = []; field = '';
+          } else { field += ch; }
+        }
+      }
+      if (field || row.length) { row.push(field.trim()); rows.push(row); }
+      return rows;
+    }
+
+    async function loadReviews() {
+      let reviews = [];
+      if (REVIEWS_CSV_URL) {
+        try {
+          const res = await fetch(REVIEWS_CSV_URL);
+          if (res.ok) {
+            const rows = parseCSV(await res.text());
+            reviews = rows.slice(1)
+              .map(r => ({ name: (r[0] || '').trim(), text: (r[1] || '').trim() }))
+              .filter(r => r.name && r.text);
+          }
+        } catch {}
+      }
+      if (!reviews.length) reviews = FALLBACK_REVIEWS;
+      renderCarousel(reviews);
+    }
+
+    function renderCarousel(reviews) {
+      const track = document.getElementById('reviews-track');
+      const dots = document.getElementById('reviews-dots');
+      track.innerHTML = '';
+      dots.innerHTML = '';
+
+      reviews.forEach((r, i) => {
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        const p = document.createElement('p');
+        p.textContent = '"' + r.text + '"';
+        const footer = document.createElement('div');
+        footer.className = 'review-footer';
+        const name = document.createElement('span');
+        name.className = 'reviewer';
+        name.textContent = r.name;
+        const mark = document.createElement('span');
+        mark.className = 'quote-mark';
+        mark.innerHTML = '&ldquo;';
+        footer.appendChild(name);
+        footer.appendChild(mark);
+        card.appendChild(p);
+        card.appendChild(footer);
+        track.appendChild(card);
+
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dots.appendChild(dot);
+      });
+
+      let index = 0;
+      function goTo(i) {
+        index = (i + reviews.length) % reviews.length;
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
+        dots.querySelectorAll('.carousel-dot').forEach((d, idx) => {
+          d.classList.toggle('active', idx === index);
+        });
+      }
+
+      const AUTO_MS = 6000;
+      let timer = setInterval(() => goTo(index + 1), AUTO_MS);
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(index + 1), AUTO_MS);
+      }
+
+      const carousel = document.querySelector('.reviews-carousel');
+      carousel.addEventListener('mouseenter', () => clearInterval(timer));
+      carousel.addEventListener('mouseleave', resetTimer);
+
+      dots.querySelectorAll('.carousel-dot').forEach((d) => {
+        d.addEventListener('click', resetTimer);
+      });
+    }
+
+    loadReviews();
+  </script>
 
   <section class="scholarships">
     <h2>Scholarships and Financial Awards</h2>
@@ -104,20 +207,8 @@
   </section>
 
   <footer class="footer">
-    <div class="wave-bg wave-bg--dark" style="top: -40px"></div>
     <p>Working In Association With:</p>
     <a href="https://learnersjourney.co.za/" target="_blank" rel="noopener noreferrer"><img src="assets/tlj.png" alt="The Learner's Journey" class="partner-logo"></a>
   </footer>
-  <script>
-    const nav = document.getElementById('homeNav');
-    const heroLogo = document.querySelector('.hero-logo');
-    window.addEventListener('scroll', () => {
-      if (heroLogo.getBoundingClientRect().bottom < 0) {
-        nav.classList.add('nav--visible');
-      } else {
-        nav.classList.remove('nav--visible');
-      }
-    }, { passive: true });
-  </script>
 </body>
 </html>
