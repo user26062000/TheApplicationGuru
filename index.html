@@ -72,12 +72,22 @@
 
   <section class="reviews">
     <h2>Client Reviews</h2>
+    <blockquote class="reviews-quote">
+      <p>&ldquo;Sally is a magician!&rdquo;</p>
+      <cite>Heidi Sulcas, The Learner&rsquo;s Journey</cite>
+    </blockquote>
     <div class="reviews-carousel">
+      <button class="carousel-btn carousel-prev" type="button" aria-label="Previous review">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
       <div class="carousel-viewport">
         <div class="carousel-track" id="reviews-track">
           <p class="reviews-loading">Loading reviews...</p>
         </div>
       </div>
+      <button class="carousel-btn carousel-next" type="button" aria-label="Next review">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
     <div class="carousel-dots" id="reviews-dots"></div>
   </section>
@@ -91,7 +101,7 @@
       { name: 'Jamie J', text: "Sally helped me cut out unnecessary points and write concise, impactful personal statements. Whenever I messaged her, she was so efficient in getting back to me. I wouldn't have been able to produce such perfect statements without her guidance." },
       { name: 'Jade R', text: "Sally helped me write my personal statements both for my undergraduate application to the University of Exeter and for my Master's application to Oxford. I got into both universities, with scholarships." },
       { name: 'Jack W', text: "I have received offers from St Andrews and Durham so far and I think I'm going to end up attending one of them. Thank you again for your help, they said my personal statement was a highlight." },
-      { name: 'Parent', text: "Sally is a magician! When you have a child who is word efficient (i.e, reserved), at best, and needs to introduce themselves to admission boards via personal essays, it seems like an impossible task. Sally has an incredible ability to take students on a journey of self reflection and expression. Both my children were accepted to their first choice programs. Sally does not write the essays but coaches them through the process. She is my answer to prayer!" }
+      { name: 'Heidi Sulcas', text: "Sally is a magician! When you have a child who is word efficient (i.e, reserved), at best, and needs to introduce themselves to admission boards via personal essays, it seems like an impossible task. Sally has an incredible ability to take students on a journey of self reflection and expression. Both my children were accepted to their first choice programs. Sally does not write the essays but coaches them through the process. She is my answer to prayer!" }
     ];
 
     function parseCSV(text) {
@@ -175,20 +185,8 @@
         });
       }
 
-      const AUTO_MS = 6000;
-      let timer = setInterval(() => goTo(index + 1), AUTO_MS);
-      function resetTimer() {
-        clearInterval(timer);
-        timer = setInterval(() => goTo(index + 1), AUTO_MS);
-      }
-
-      const carousel = document.querySelector('.reviews-carousel');
-      carousel.addEventListener('mouseenter', () => clearInterval(timer));
-      carousel.addEventListener('mouseleave', resetTimer);
-
-      dots.querySelectorAll('.carousel-dot').forEach((d) => {
-        d.addEventListener('click', resetTimer);
-      });
+      document.querySelector('.carousel-prev').addEventListener('click', () => goTo(index - 1));
+      document.querySelector('.carousel-next').addEventListener('click', () => goTo(index + 1));
     }
 
     loadReviews();

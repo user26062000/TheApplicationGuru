@@ -52,10 +52,18 @@
         <div class="radio-group">
           <label class="radio-label"><input type="radio" name="role" value="Undergraduate" required> Undergraduate degree</label>
           <label class="radio-label"><input type="radio" name="role" value="Masters"> Master's degree</label>
-          <label class="radio-label"><input type="radio" name="role" value="PhD"> PhD</label>
           <label class="radio-label"><input type="radio" name="role" value="Honours degree"> Honours degree</label>
           <label class="radio-label"><input type="radio" name="role" value="Postgraduate (other)"> Postgraduate (other)</label>
         </div>
+      </div>
+      <div class="form-group">
+        <label>Countries you&rsquo;re interested in applying to:</label>
+        <div class="countries-group" id="countries-group">
+          <div class="country-row">
+            <input type="text" name="country[]" class="country-input" placeholder="e.g. United Kingdom">
+          </div>
+        </div>
+        <button type="button" class="btn-add-country" id="add-country">+ Add another</button>
       </div>
       <div class="form-group">
         <label>Message <span class="required">(Required)</span></label>
@@ -65,8 +73,33 @@
     </form>
     <div class="booking-email">
       <p>Or reach out directly:</p>
-      <a href="mailto:theapplicationguru@icloud.com" class="btn btn-contact">Email</a>
+      <div class="contact-direct">
+        <a href="mailto:theapplicationguru@icloud.com" class="btn btn-contact">theapplicationguru@icloud.com</a>
+        <a href="tel:+27846411255" class="btn btn-contact">+27 84 641 1255</a>
+      </div>
     </div>
   </section>
+
+  <script>
+    document.getElementById('add-country').addEventListener('click', () => {
+      const group = document.getElementById('countries-group');
+      const row = document.createElement('div');
+      row.className = 'country-row';
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.name = 'country[]';
+      input.className = 'country-input';
+      input.placeholder = 'e.g. United Kingdom';
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'remove-country';
+      remove.setAttribute('aria-label', 'Remove country');
+      remove.textContent = '×';
+      remove.addEventListener('click', () => row.remove());
+      row.appendChild(input);
+      row.appendChild(remove);
+      group.appendChild(row);
+    });
+  </script>
 </body>
 </html>
