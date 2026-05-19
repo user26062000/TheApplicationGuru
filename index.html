@@ -176,17 +176,25 @@
         dots.appendChild(dot);
       });
 
+      const viewport = document.querySelector('.carousel-viewport');
       let index = 0;
+      function syncHeight() {
+        const active = track.children[index];
+        if (active) viewport.style.height = active.offsetHeight + 'px';
+      }
       function goTo(i) {
         index = (i + reviews.length) % reviews.length;
         track.style.transform = 'translateX(-' + (index * 100) + '%)';
         dots.querySelectorAll('.carousel-dot').forEach((d, idx) => {
           d.classList.toggle('active', idx === index);
         });
+        syncHeight();
       }
 
       document.querySelector('.carousel-prev').addEventListener('click', () => goTo(index - 1));
       document.querySelector('.carousel-next').addEventListener('click', () => goTo(index + 1));
+      syncHeight();
+      window.addEventListener('resize', syncHeight);
     }
 
     loadReviews();
