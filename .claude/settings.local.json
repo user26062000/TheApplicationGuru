@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(ls -lh /Users/nickrushton/Documents/Code/\"The Application Guru\"/assets/logo-exeter*)"
-    ]
-  }
-}
